@@ -23,3 +23,4 @@ K = p*10.000 - (T*100 + Min)
 
 #### Opmerkingen
 - Probeer zo veel mogelijk object-georienteerd te programmeren
+- gebruik bijv. matplotlib voor visualisatie
