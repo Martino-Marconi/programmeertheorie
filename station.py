@@ -5,14 +5,16 @@ class Station:
         self.x_coord = x_coord
         self.y_coord = y_coord
 
-        self.connections = {}
+        self.connections = []
+        self.distances = {}
 
+    def add_connection(self, next_station):
+        self.connections.append(next_station)
 
-    def add_connection(self, next_station, distance):
+    def add_distance(self, next_station, distance):
 
-        self.connections[next_station] = int(distance)
+        self.distances[next_station] = int(distance)
     
     def get_connections(self):
         return self.connections
         
-
