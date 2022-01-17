@@ -37,8 +37,9 @@ def load_coordinates():
 def map_plot(dataframe):
 
     route_data = dataframe
+    tmp_data = route_data
 
-    # df_geo = gpd.GeoDataFrame(route_data, geometry = gpd.points_from_xy(route_data.x, route_data.y))
+    df_geo = gpd.GeoDataFrame(tmp_data, geometry = gpd.points_from_xy(route_data.x, route_data.y))
 
     # get built in dataset from geopandas
 
@@ -48,7 +49,7 @@ def map_plot(dataframe):
     # plot world map
     axis = world_data[world_data.name == "Netherlands"].plot(color = 'lightblue', edgecolor='black')
 
-    # df_geo.plot(ax=axis, color="black")
+    df_geo.plot(ax=axis, color="black")
 
     for i in range(1, 8):
 
