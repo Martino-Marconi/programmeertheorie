@@ -1,10 +1,7 @@
-
 from station import Station
 from loader import file_loader
 import random
-import matplotlib.pyplot as plt
-import plot
-import pandas as pd
+
 
 class Train:
     def __init__(self, train_number, max_time):
@@ -22,26 +19,32 @@ class Route:
         self.trains = []
         self.routes = routes
         self.train_counter = 0
-        self.train_data = {}
+        self.train_route = []
 
         # init train classes equal to number of routes
         for i in range(1, routes + 1):
             self.trains.append(Train(i, max_time))
 
+
     def pick_first_stop(self):
         self.train = self.trains[self.train_counter]
+
+        for stations in self.stations:
+            while len(stations.connections) == 1 and stations.visited == False:
+                self.train.first_stop = stations
+                self.train.stops.append(self.train.first_stop)
+                self.train.first_stop.set_visited()
+                return self.train.first_stop
         self.train.first_stop = random.choice(self.stations)
         self.train.stops.append(self.train.first_stop)
         self.train.first_stop.set_visited()
-        # print(self.train.first_stop.name)
-        # print(self.train.name)
+                
 
     def route(self):
 
         while self.train_counter < self.routes:
             # print(self.train_counter)
             self.pick_first_stop()
-
             while self.train.time_travelled <= 120:
                 # pick next stop
                 self.train.next_stop = random.choice(self.train.first_stop.connections)
@@ -55,7 +58,6 @@ class Route:
                         self.add_travel_time()
                         self.train.first_stop = self.train.next_stop
                     else:
-                        self.train_data[self.train.name] = [station.name for station in self.train.stops]
                         break
                         
                 else:
@@ -65,26 +67,27 @@ class Route:
                             connection_counter += 1
 
                     if connection_counter == len(self.train.first_stop.connections):
-                        self.train_data[self.train.name] = [station.name for station in self.train.stops]
                         break
-            
+                
+                self.train_route.append(self.train.next_stop.name)
+            for stops in self.train.stops:
+                print(self.train.name, ":", stops.name)
+            self.train_route = []
             self.train_counter += 1
+        for station in self.stations:
+            if station.visited == False:
+                print()
+                print(station.name, end=" ")
+                print(station.visited)
+        print()
+
 
     def add_travel_time(self):
         self.train.time_travelled += self.train.first_stop.distances[self.train.next_stop]
+        # print(self.train.time_travelled)
 
-
-    def plot(self):
-        df = plot.make_dataframe(self.train_data)
-        coords_df = plot.load_coordinates()
-
-        merged_plot = pd.merge(df, coords_df, on="stations").sort_values("train").reset_index()
-        del merged_plot["index"]
-
-        plot.map_plot(merged_plot)
 
 
 if __name__ == "__main__":
     route1 = Route(7, 120)
     route1.route()
-    route1.plot()
