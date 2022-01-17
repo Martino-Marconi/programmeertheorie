@@ -85,9 +85,20 @@ class Route:
     def add_travel_time(self):
         self.train.time_travelled += self.train.first_stop.distances[self.train.next_stop]
         # print(self.train.time_travelled)
+    
+    def plot(self):
+        df = plot.make_dataframe(self.train_data)
+        coords_df = plot.load_coordinates()
+
+        merged_plot = pd.merge(df, coords_df, on="stations").sort_values("train").reset_index()
+        del merged_plot["index"]
+
+        plot.map_plot(merged_plot)
+
 
 
 
 if __name__ == "__main__":
     route1 = Route(7, 120)
     route1.route()
+    route1.plot()
