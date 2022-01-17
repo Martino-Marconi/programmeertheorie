@@ -5,6 +5,8 @@ class Station:
         self.x_coord = x_coord
         self.y_coord = y_coord
 
+        self.visited = False
+
         self.connections = []
         self.distances = {}
 
@@ -17,4 +19,6 @@ class Station:
     
     def get_connections(self):
         return self.connections
-        
+
+    def set_visited(self):
+        self.visited = True
