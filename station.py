@@ -15,7 +15,7 @@ class Station:
 
     def add_distance(self, next_station, distance):
 
-        self.distances[next_station] = int(distance)
+        self.distances[next_station] = float(distance)
     
     def get_connections(self):
         return self.connections
