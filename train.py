@@ -3,7 +3,7 @@ from loader import file_loader
 import random
 import plot
 import pandas as pd
-
+import score
 
 class Train:
     def __init__(self, train_number, max_time):
@@ -85,8 +85,12 @@ class Route:
                 print(station.name, end=" ")
                 print(station.visited)
         print()
-
-
+        
+        # once number of required trains is reached, print + plot results and calculate score
+        final_score = score.calculate_score(self.trains, self.stations)
+        score.print_results(final_score, self.train_data)
+        self.plot()
+        
     def add_travel_time(self):
         self.train.time_travelled += self.train.first_stop.distances[self.train.next_stop]
         # print(self.train.time_travelled)
@@ -104,4 +108,3 @@ class Route:
 if __name__ == "__main__":
     route1 = Route(7, 120)
     route1.route()
-    route1.plot()
