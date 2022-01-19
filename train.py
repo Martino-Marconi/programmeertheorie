@@ -1,6 +1,8 @@
 from station import Station
 from loader import file_loader
 import random
+import plot
+import pandas as pd
 
 
 class Train:
