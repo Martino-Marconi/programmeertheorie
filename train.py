@@ -75,16 +75,16 @@ class Route:
                         break
                 
                 self.train_route.append(self.train.next_stop.name)
-        #     for stops in self.train.stops:
-        #         print(self.train.name, ":", stops.name)
+            for stops in self.train.stops:
+                print(self.train.name, ":", stops.name)
             self.train_route = []
             self.train_counter += 1
-        # for station in self.stations:
-        #     if station.visited == False:
-        #         print()
-        #         print(station.name, end=" ")
-        #         print(station.visited)
-        # print()
+        for station in self.stations:
+            if station.visited == False:
+                print()
+                print(station.name, end=" ")
+                print(station.visited)
+        print()
 
 
     def add_travel_time(self):
