@@ -22,6 +22,7 @@ class Route:
         self.routes = routes
         self.train_counter = 0
         self.train_route = []
+        self.train_data = {}
 
         # init train classes equal to number of routes
         for i in range(1, routes + 1):
@@ -60,6 +61,7 @@ class Route:
                         self.add_travel_time()
                         self.train.first_stop = self.train.next_stop
                     else:
+                        self.train_data[self.train.name] = self.train_route
                         break
                         
                 else:
@@ -69,19 +71,20 @@ class Route:
                             connection_counter += 1
 
                     if connection_counter == len(self.train.first_stop.connections):
+                        self.train_data[self.train.name] = self.train_route
                         break
                 
                 self.train_route.append(self.train.next_stop.name)
-            for stops in self.train.stops:
-                print(self.train.name, ":", stops.name)
+        #     for stops in self.train.stops:
+        #         print(self.train.name, ":", stops.name)
             self.train_route = []
             self.train_counter += 1
-        for station in self.stations:
-            if station.visited == False:
-                print()
-                print(station.name, end=" ")
-                print(station.visited)
-        print()
+        # for station in self.stations:
+        #     if station.visited == False:
+        #         print()
+        #         print(station.name, end=" ")
+        #         print(station.visited)
+        # print()
 
 
     def add_travel_time(self):
@@ -96,8 +99,6 @@ class Route:
         del merged_plot["index"]
 
         plot.map_plot(merged_plot)
-
-
 
 
 if __name__ == "__main__":
