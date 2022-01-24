@@ -27,8 +27,16 @@ def file_loader():
                     
                     if row[1] == station.name:
                         if row[0] == connection.name:
+<<<<<<< HEAD
                             station.add_connection(connection, float(row[2]))
 
+=======
+                            station.add_connection(connection)
+                            station.add_distance(connection, row[2])   
+
+
+                            
+>>>>>>> d934e0f (new)
     return stations
 
 if __name__ == "__main__":
