@@ -6,6 +6,7 @@ import pandas as pd
 import score
 import matplotlib.pyplot as plt
 
+all_stops = []
 
 class Train:
     def __init__(self, train_number, max_time):
@@ -32,20 +33,38 @@ class Route:
 
 
     def pick_first_stop(self):
+        # --------- pseudocode --------- #
+        # train picks the station with the shortest route
+        # if shortest route is travelled, pick second shortest.
+        # continue proces untill the train has the shortest route that is available
+        # return the station from where it starts
+        
         # keeps track of which train is currently picking a route
         self.train = self.trains[self.train_counter]
+        
+        empty_dataframe = pd.DataFrame()
 
-        # goes through all possible stations and finds ones with 1 connection and uses those and first stations
         for stations in self.stations:
-            while len(stations.connections) == 1:
-                self.train.first_stop = stations
-                self.train.stops.append(self.train.first_stop)
-                return self.train.first_stop
+            new_station = {'station1' : stations, 'station2': stations.connections.keys(), 'time': stations.connections.values()}
+            connections_df = pd.DataFrame.from_dict(new_station)
+            empty_dataframe = empty_dataframe.append(connections_df, ignore_index=True)
+        empty_dataframe = empty_dataframe.sort_values(by="time", ascending=True)
+        # print(empty_dataframe)
 
-        # when all 1 connection are used, a random station is picked as first station
-        self.train.first_stop = random.choice(self.stations)
-        self.train.stops.append(self.train.first_stop)
-        return self.train.first_stop
+        count = 0
+        for index, row in empty_dataframe.iterrows():
+            row_route = empty_dataframe.iloc[count]
+            count += 1
+            if row_route.station1 not in all_stops or row_route.station2 not in all_stops:
+                # print(self.train.stops)
+                print()
+                self.train.stops.append(row_route.station1)
+                self.train.stops.append(row_route.station2)
+
+                print(f"{row_route.station1.name} <> {row_route.station2.name} <> {row_route.time}")
+
+                return row_route.station1
+            continue
     
     def route(self):
         # --------- pseudocode --------- #
