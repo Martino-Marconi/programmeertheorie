@@ -1,0 +1,9 @@
+train,stations
+train_1,"['Alkmaar', 'Castricum', 'Beverwijk', 'Castricum', 'Zaandam', 'Beverwijk', 'Castricum', 'Amsterdam Sloterdijk', 'Amsterdam Zuid', 'Schiphol Airport']"
+train_2,"['Hengelo', 'Almelo', 'Zwolle', 'Steenwijk', 'Heerenveen', 'Steenwijk', 'Steenwijk', 'Leeuwarden']"
+train_3,"['Sittard', 'Maastricht']"
+train_4,"['Almere Centrum', 'Lelystad Centrum', 'Amsterdam Centraal', 'Utrecht Centraal', 'Ede-Wageningen', 'Utrecht Centraal', 'Utrecht Centraal', 'Utrecht Centraal', 'Utrecht Centraal', 'Utrecht Centraal', 'Utrecht Centraal', 'Utrecht Centraal', 'Utrecht Centraal', 'Arnhem Centraal', 'Nijmegen']"
+train_5,"['Helmond', 'Venlo', 'Venlo', 'Venlo', 'Venlo', 'Venlo', 'Eindhoven', 's-Hertogenbosch', 'Tilburg', 's-Hertogenbosch', 'Breda', 'Dordrecht', 'Rotterdam Centraal']"
+train_6,"['Roosendaal', 'Vlissingen', 'Etten-Leur']"
+train_7,"['Sittard', 'Maastricht']"
+score,3965.0
