@@ -1,7 +1,7 @@
 import csv
 
 from station import Station
-from connection import Connection
+# from connection import Connection
 
 def file_loader():
 
