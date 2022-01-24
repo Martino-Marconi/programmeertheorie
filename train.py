@@ -26,27 +26,64 @@ class Route:
         self.train_route = []
         self.train_data = {}
 
+
         # init train classes equal to number of routes
         for i in range(1, routes + 1):
             self.trains.append(Train(i, max_time))
 
 
     def pick_first_stop(self):
+        # --------- pseudocode --------- #
+        # train picks the station with the shortest route
+        # if shortest route is travelled, pick second shortest.
+        # continue proces untill the train has the shortest route that is available
+        # return the station from where it starts
+        
         # keeps track of which train is currently picking a route
         self.train = self.trains[self.train_counter]
+        
+        empty_dataframe = pd.DataFrame()
 
-        # goes through all possible stations and finds ones with 1 connection and uses those and first stations
         for stations in self.stations:
-            while len(stations.connections) == 1:
-                self.train.first_stop = stations
-                self.train.stops.append(self.train.first_stop)
-                return self.train.first_stop
+            new_station = {'station1' : stations, 'station2': stations.connections.keys(), 'time': stations.connections.values()}
+            connections_df = pd.DataFrame.from_dict(new_station)
+            empty_dataframe = empty_dataframe.append(connections_df, ignore_index=True)
+        empty_dataframe = empty_dataframe.sort_values(by="time", ascending=True)
+        # print(empty_dataframe)
+        print()
+        count = 0
+        for index, row in empty_dataframe.iterrows():
+            row_route = empty_dataframe.iloc[count]
+            count += 1
+            if row_route.station1 not in self.train.stops or row_route.station2 not in self.train.stops:
+                print(self.train.stops)
+                self.train.stops.append(row_route.station1)
+                self.train.stops.append(row_route.station2)
 
-        # when all 1 connection are used, a random station is picked as first station
-        self.train.first_stop = random.choice(self.stations)
-        self.train.stops.append(self.train.first_stop)
-        return self.train.first_stop
-    
+
+                print(f"{row_route.station1.name} <> {row_route.station2.name} <> {row_route.time}")
+
+                return row_route.station1
+            continue
+
+        # # when all connections are used, a random station is picked as first station
+        # self.train.first_stop = random.choice(self.stations)
+        # self.train.stops.append(self.train.first_stop)
+        # print("d")
+        # return self.train.first_stop
+
+
+
+
+
+
+
+
+
+
+
+
+
     def route(self):
         # --------- pseudocode --------- #
         # train picks a first station
@@ -54,31 +91,37 @@ class Route:
         # if at least 100 minutes is not reached, go to the last station visited and pick second shortest connection
         # if time still not reached, try all connections
         # if no connection adds up to at least 100 minutes, go back to the second last station visited and go back to step 2
-        self.current_station = self.pick_first_stop()
+        
+        while self.train_counter < self.routes:
+        
+            self.current_station = self.pick_first_stop()
+            # print(f"First station: {self.current_station.name}")
+            self.train_counter += 1
+            print(self.train.stops)
 
-        print(f"First station: {self.current_station.name}")
+        
+        
+        
+        # while self.train.time_travelled <= 120:
 
-        while self.train.time_travelled <= 120:
+        #     self.next_station = self.current_station.pick_shortest_connection(self.current_station)
 
+        #         # should be code here that would switch to second shortest connection, cause otherwise you get infinite loop
 
-            self.next_station = self.current_station.pick_shortest_connection(self.current_station)
+        #     # print(self.next_station.name)
 
-                # should be code here that would switch to second shortest connection, cause otherwise you get infinite loop
+        #     if self.no_useable_connections():
+        #         break
 
-            print(self.next_station.name)
+        #     if self.connection_already_used():
+        #         continue
 
-            if self.no_useable_connections():
-                break
+        #     distance = self.current_station.get_travel_time(self.next_station)
+        #     self.add_travel_time(distance)
+        #     self.train.stops.append(self.next_station)
+        #     self.use_connections(self.current_station, self.next_station)
 
-            if self.connection_already_used():
-                continue
-
-            distance = self.current_station.get_travel_time(self.next_station)
-            self.add_travel_time(distance)
-            self.train.stops.append(self.next_station)
-            self.use_connections(self.current_station, self.next_station)
-
-            self.current_station = self.next_station
+        #     self.current_station = self.next_station
     
 
     def add_travel_time(self, distance):
