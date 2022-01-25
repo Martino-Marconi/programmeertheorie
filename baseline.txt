@@ -1,0 +1,10 @@
+Het doel van ons tweede algoritme is om een lijnvoering te programmeren (maximaal zeven trajecten binnen een tijdsframe van twee uur) met 
+een zo hoog mogelijke score. Om een hoge score te krijgen is het belangrijk om zo veel mogelijk verbindingen te rijden en een zo laag mogelijke 
+opgetelde tijdscore samen te stellen. Om die reden hebben wij ervoor gekozen om zowel het begin station van de zeven treinen als de connecties 
+die de treinen maken te kiezen met een algoritme dat de kortste connectie zoekt. Dit resulteert in een stijging van 48% in de score vergeleken 
+met de random score.
+
+Wel zijn er nog enkele beperkingen in ons algoritme. De belangrijkste beperking vindt plaats als een station alle verbonden connecties al 
+bereden heeft. Op dat moment stopt de trein met rijden. In een volgende algoritme moeten we kijken of het een hogere score oplevert als we de 
+trein laten doorrijden op een al bereden traject, met de kans dat de trein vervolgens trajecten vindt die nog niet bereden zijn. Ook zullen we 
+kijken of we nog een iteratieve algoritme kunnen implementeren om te zoeken naar een nog betere score.
