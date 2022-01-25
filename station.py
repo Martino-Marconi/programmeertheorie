@@ -11,14 +11,14 @@ class Station:
         self.connections[connected_station] = distance
     
     def pick_shortest_connection(self, current_station):
-
+        
         distance_counter = 10000
-        next_station = ""
+        next_station = None
         stations = current_station.connections
 
         for station in stations:
             if int(stations[station]) < distance_counter:
-                if station not in current_station.used_connections:
+                if station not in current_station.used_connections and current_station not in station.used_connections:
                     distance_counter = stations[station]
                     next_station = station
 
