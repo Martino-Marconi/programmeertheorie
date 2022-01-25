@@ -74,32 +74,38 @@ class Route:
         # if at least 100 minutes is not reached, go to the last station visited and pick second shortest connection
         # if time still not reached, try all connections
         # if no connection adds up to at least 100 minutes, go back to the second last station visited and go back to step 2
-        self.current_station = self.pick_first_stop()
+        while self.train_counter < self.routes:
 
-        print(f"First station: {self.current_station.name}")
+            self.current_station = self.pick_first_stop()
 
-        while self.train.time_travelled <= 120:
+            print(f"First station: {self.current_station.name}")
+
+            while self.train.time_travelled <= 120:
 
 
-            self.next_station = self.current_station.pick_shortest_connection(self.current_station)
+                self.next_station = self.current_station.pick_shortest_connection(self.current_station)
 
-                # should be code here that would switch to second shortest connection, cause otherwise you get infinite loop
+                if self.next_station == None:
+                    break
 
-            print(self.next_station.name)
+                    # should be code here that would switch to second shortest connection, cause otherwise you get infinite loop
 
-            if self.no_useable_connections():
-                break
+                print(self.next_station.name)
 
-            if self.connection_already_used():
-                continue
+                if self.no_useable_connections():
+                    break
 
-            distance = self.current_station.get_travel_time(self.next_station)
-            self.add_travel_time(distance)
-            self.train.stops.append(self.next_station)
-            self.use_connections(self.current_station, self.next_station)
+                if self.connection_already_used():
+                    continue
 
-            self.current_station = self.next_station
-    
+                distance = self.current_station.get_travel_time(self.next_station)
+                self.add_travel_time(distance)
+                self.train.stops.append(self.next_station)
+                self.use_connections(self.current_station, self.next_station)
+
+                self.current_station = self.next_station
+
+            self.train_counter += 1
 
     def add_travel_time(self, distance):
         self.train.time_travelled += distance
