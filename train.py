@@ -33,13 +33,6 @@ class Route:
 
 
     def pick_first_stop(self):
-        # --------- pseudocode --------- #
-        # train picks the station with the shortest route
-        # if shortest route is travelled, pick second shortest.
-        # continue proces untill the train has the shortest route that is available
-        # return the station from where it starts
-        
-        # keeps track of which train is currently picking a route
         self.train = self.trains[self.train_counter]
         
         empty_dataframe = pd.DataFrame()
@@ -68,15 +61,11 @@ class Route:
             continue
     
     def route(self):
-        # --------- pseudocode --------- #
-        # train picks a first station
-        # route is calculated from first station, using next station with shortest route
-        # if at least 100 minutes is not reached, go to the last station visited and pick second shortest connection
-        # if time still not reached, try all connections
-        # if no connection adds up to at least 100 minutes, go back to the second last station visited and go back to step 2
+
         while self.train_counter < self.routes:
 
             self.current_station = self.pick_first_stop()
+            self.current_station.set_visited()
 
             print(f"First station: {self.current_station.name}")
 
@@ -87,8 +76,6 @@ class Route:
 
                 if self.next_station == None:
                     break
-
-                    # should be code here that would switch to second shortest connection, cause otherwise you get infinite loop
 
                 print(self.next_station.name)
 
@@ -101,11 +88,19 @@ class Route:
                 distance = self.current_station.get_travel_time(self.next_station)
                 self.add_travel_time(distance)
                 self.train.stops.append(self.next_station)
+                self.next_station.set_visited()
                 self.use_connections(self.current_station, self.next_station)
 
                 self.current_station = self.next_station
 
             self.train_counter += 1
+
+
+        # once number of required trains is reached, print + plot results and calculate score
+        final_score = score.calculate_score(self.trains, self.stations)
+        self.plot()
+        score.print_results(final_score, self.train_data)
+        
 
     def add_travel_time(self, distance):
         self.train.time_travelled += distance
@@ -130,6 +125,25 @@ class Route:
             return True
 
         return False
+    
+    def plot(self):
+        self.get_train_data()
+        df = plot.make_dataframe(self.train_data)
+        coords_df = plot.load_coordinates()
+
+        merged_plot = pd.merge(df, coords_df, on="stations")
+
+        plot.map_plot(merged_plot)
+
+    def get_train_data(self):
+
+        for train in self.trains:
+            station_list = []
+            for station in train.stops:
+                station_list.append(station.name)
+
+            self.train_data[train.name] = station_list
+
 
 if __name__ == "__main__":
     route1 = Route(7, 120)
