@@ -62,7 +62,8 @@ class Route:
                 self.train.stops.append(row_route.station2)
 
                 print(f"{row_route.station1.name} <> {row_route.station2.name} <> {row_route.time}")
-
+                all_stops.append(row_route.station1)
+                all_stops.append(row_route.station2)
                 return row_route.station1
             continue
     
