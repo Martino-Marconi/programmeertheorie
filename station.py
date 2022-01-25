@@ -6,6 +6,7 @@ class Station:
 
         self.connections = {}
         self.used_connections = []
+        self.visited = False
     
     def add_connection(self, connected_station, distance):
         self.connections[connected_station] = distance
@@ -26,3 +27,6 @@ class Station:
     
     def get_travel_time(self, connection):
         return self.connections[connection]
+    
+    def set_visited(self):
+        self.visited = True
