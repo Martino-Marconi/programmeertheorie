@@ -6,7 +6,7 @@ import plotly.express as px
 from shapely.geometry import point, linestring
 import csv
 import random
-
+import cbsodata
 
 
 def make_dataframe(data):
@@ -41,14 +41,15 @@ def map_plot(dataframe):
 
     df_geo = gpd.GeoDataFrame(tmp_data, geometry = gpd.points_from_xy(route_data.x, route_data.y))
 
-    # get built in dataset from geopandas
-
-    world_data = gpd.read_file(gpd.datasets.get_path("naturalearth_lowres"))
-    # print(world_data.head(10))
-
+    # get a dataset from cbsodata and adjust the coordinates
+    url = 'https://geodata.nationaalgeoregister.nl/cbsgebiedsindelingen/wfs?request=GetFeature&service=WFS&version=2.0.0&typeName=cbs_gemeente_2017_gegeneraliseerd&outputFormat=json'
+    nederland = gpd.read_file(url)
+    nederland = nederland.to_crs("EPSG:4326")
+    
     # plot world map
-    axis = world_data[world_data.name == "Netherlands"].plot(color = 'lightblue', edgecolor='black')
+    axis = nederland.plot(color = 'lightblue', edgecolor='black')
 
+    
     df_geo.plot(ax=axis, color="black")
 
     for i in range(1, 8):
