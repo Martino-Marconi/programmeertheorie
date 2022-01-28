@@ -6,7 +6,6 @@ import pandas as pd
 import score
 import matplotlib.pyplot as plt
 
-all_stops = []
 
 class Train:
     def __init__(self, train_number, max_time):
@@ -17,10 +16,13 @@ class Train:
         self.first_stop = " "
         self.next_stop = " "
         self.name = f"train_{self.train_number}"
+        self.connections = []
+
 
 class Route:
     def __init__(self, routes, max_time):
-        self.stations = file_loader()
+        self.stations = file_loader()[0]
+        self.connections = file_loader()[1]
         self.trains = []
         self.routes = routes
         self.train_counter = 0
@@ -34,32 +36,20 @@ class Route:
 
     def pick_first_stop(self):
         self.train = self.trains[self.train_counter]
-        
-        empty_dataframe = pd.DataFrame()
 
-        for stations in self.stations:
-            new_station = {'station1' : stations, 'station2': stations.connections.keys(), 'time': stations.connections.values()}
-            connections_df = pd.DataFrame.from_dict(new_station)
-            empty_dataframe = empty_dataframe.append(connections_df, ignore_index=True)
-        empty_dataframe = empty_dataframe.sort_values(by="time", ascending=True)
-        # print(empty_dataframe)
+        # for stations in self.stations:
+        #     while len(stations.connections) == 1 and stations.visited == False:
+        #         self.train.first_stop = stations
+        #         self.train.stops.append(self.train.first_stop)
+        #         self.train_route.append(self.train.first_stop.name)
+        #         self.train.first_stop.set_visited()
+        #         return self.train.first_stop
+        self.train.first_stop = random.choice(self.stations)
+        self.train.stops.append(self.train.first_stop)
+        self.train_route.append(self.train.first_stop.name)
+        return self.train.first_stop
 
-        count = 0
-        for index, row in empty_dataframe.iterrows():
-            row_route = empty_dataframe.iloc[count]
-            count += 1
-            if row_route.station1 not in all_stops or row_route.station2 not in all_stops:
-                # print(self.train.stops)
-                print()
-                self.train.stops.append(row_route.station1)
-                self.train.stops.append(row_route.station2)
 
-                print(f"{row_route.station1.name} <> {row_route.station2.name} <> {row_route.time}")
-                all_stops.append(row_route.station1)
-                all_stops.append(row_route.station2)
-                return row_route.station1
-            continue
-    
     def route(self):
 
         while self.train_counter < self.routes:
@@ -67,17 +57,25 @@ class Route:
             self.current_station = self.pick_first_stop()
             self.current_station.set_visited()
 
-            print(f"First station: {self.current_station.name}")
+            # print(f"First station: {self.current_station.name}")
 
-            while self.train.time_travelled <= 120:
+            fail_counter = 0
+            while self.train.time_travelled <= 180:
 
 
                 self.next_station = self.current_station.pick_shortest_connection(self.current_station)
 
+                if self.next_station in self.train.stops:
+                    fail_counter += 1
+
+                    if fail_counter == 10:
+                        break
+
+                    continue
+
                 if self.next_station == None:
                     break
 
-                print(self.next_station.name)
 
                 if self.no_useable_connections():
                     break
@@ -95,26 +93,134 @@ class Route:
 
             self.train_counter += 1
 
+        self.improve_trains()
 
         # once number of required trains is reached, print + plot results and calculate score
         final_score = score.calculate_score(self.trains, self.stations)
+
         self.plot()
-        score.print_results(final_score, self.train_data)
+        score.print_results(final_score, self.train_data, "data/output.csv")
+
+        self.improve_route()
+
+        final_score = score.calculate_score(self.trains, self.stations)
+        self.plot()
+        score.print_results(final_score, self.train_data, "data/output2.csv")
+
+
+    def improve_trains(self):
+        # Removes trains that only go to one station
+        trains_to_remove = []
+
+        # make list of trains to be removed
+        for train in self.trains:
+            if len(train.stops) == 1:
+                trains_to_remove.append(train)
         
+        # remove trains from route class
+        for train in trains_to_remove:
+            if train in self.trains:
+                self.trains.remove(train)
+        
+        # fix train numbers to make them consecutive again
+        for i in range(1, len(self.trains)):
+            self.trains[i].train_number = i
+            self.trains[i].name = f"train_{i}"
+    
+
+
+    def improve_route(self):
+        unused_stations = []
+
+        for station in self.stations:
+            if station.visited == False:
+                unused_stations.append(station)
+
+        # improve routes of trains until they're around 180 minutes, giving priority to unused stops
+        for train in self.trains:
+            self.improve_route_subfunction(train, unused_stations)
+        
+        unused_stations = []
+
+        for station in self.stations:
+            if station.visited == False:
+                unused_stations.append(station)
+        
+        # make new trains and routes starting from stations that have not been visited yet
+        while len(unused_stations) != 0:
+            train_number = self.trains[-1].train_number + 1
+            train = Train(train_number, 180)
+            self.trains.append(train)
+            train.stops.append(unused_stations[0])
+            unused_stations.pop(0)
+            self.improve_route_subfunction(train, unused_stations)
+    
+
+        print(unused_stations)
+    
+
+    def improve_route_subfunction(self, train, unused_stations):
+        second_fail_counter = 0
+
+        while train.time_travelled < 180:
+            # pick current and next stop
+            current_stop = train.stops[-1]
+
+            next_stop = random.choice(list(train.stops[-1].connections.keys()))
+            for station in unused_stations:
+                if station in current_stop.connections:
+                    next_stop = station
+                    break
+            
+            # break if all possible connections have been visited already
+            if next_stop in train.stops:
+                stop_counter = 0
+                for station in current_stop.connections:
+                    if station in train.stops:
+                        stop_counter += 1
+                    
+                    elif station not in train.stops:
+                        next_stop = station
+                    
+                if stop_counter == len(current_stop.connections):
+                    break
+
+            # add station to train.stops if travel time allows it
+            distance = current_stop.get_travel_time(next_stop)
+            if train.time_travelled + distance < 180:
+                train.stops.append(next_stop)
+                next_stop.set_visited()
+                current_stop = next_stop
+            else:
+                break
+
+            second_fail_counter += 1
+            if second_fail_counter == 20:
+                second_fail_counter = 0
+                break
+
 
     def add_travel_time(self, distance):
         self.train.time_travelled += distance
     
+
     def use_connections(self, station1, station2):
         station1.used_connections.append(station2)
         station2.used_connections.append(station1)
+
+        for connection in self.connections:
+            if station1.name == connection.connected_stations[0].name and station2.name == connection.connected_stations[1].name:
+                self.train.connections.append(connection)
+                connection.set_visited()
     
+
     def connection_already_used(self):
         if self.current_station in self.next_station.used_connections and self.next_station in self.current_station.used_connections:
             return True
         
         return False
     
+
     def no_useable_connections(self):
         fail_counter = 0
         for station in self.current_station.connections:
@@ -126,6 +232,7 @@ class Route:
 
         return False
     
+
     def plot(self):
         self.get_train_data()
         df = plot.make_dataframe(self.train_data)
@@ -135,8 +242,8 @@ class Route:
 
         plot.map_plot(merged_plot)
 
-    def get_train_data(self):
 
+    def get_train_data(self):
         for train in self.trains:
             station_list = []
             for station in train.stops:
@@ -146,5 +253,7 @@ class Route:
 
 
 if __name__ == "__main__":
-    route1 = Route(7, 120)
+
+    route1 = Route(20, 180)
+
     route1.route()
