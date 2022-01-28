@@ -1,0 +1,7 @@
+###### Requirements to run our project ######
+python 3
+pandas
+geopandas
+matplotlib
+pyplot
+shapely
