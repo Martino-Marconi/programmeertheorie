@@ -11,7 +11,7 @@ def calculate_score(trains, stations):
         else:
             visit_false += 1
 
-    stations_visited = visit_false / visit_true
+    stations_visited = visit_true / (visit_true + visit_false)
 
     number_of_trains = len(trains)
     
@@ -25,11 +25,11 @@ def calculate_score(trains, stations):
     return score
 
 
-def print_results(score, train_data):
+def print_results(score, train_data, data_file):
 
     score_dict = {"score": score}
 
-    with open("data/output.csv", "w") as file:
+    with open(data_file, "w") as file:
         writer = csv.writer(file)
         writer.writerow(["train", "stations"])
         for key, value in train_data.items():
@@ -37,3 +37,4 @@ def print_results(score, train_data):
 
         for key, value in score_dict.items():
             writer.writerow([key, value])
+
