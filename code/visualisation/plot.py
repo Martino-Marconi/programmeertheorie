@@ -7,8 +7,6 @@ from shapely.geometry import point, linestring
 import csv
 import random
 
-
-
 def make_dataframe(data):
 
     data_items = data.items()
@@ -34,7 +32,7 @@ def load_coordinates():
     return coords_df
 
 
-def map_plot(dataframe):
+def map_plot(dataframe, trains):
 
     route_data = dataframe
     tmp_data = route_data
@@ -51,7 +49,7 @@ def map_plot(dataframe):
 
     df_geo.plot(ax=axis, color="black")
 
-    for i in range(1, 8):
+    for i in range(1, trains):
 
         r = random.random()
         g = random.random()
@@ -62,4 +60,4 @@ def map_plot(dataframe):
         plt.plot(tmp_df["x"], tmp_df["y"], label=f"train_{i}", color=color)
        
     plt.legend()
-    plt.savefig("plots/NLplot.png")
+    plt.savefig("code/visualisation/NLplot.png")

@@ -6,23 +6,29 @@ class Station:
 
         self.connections = {}
         self.used_connections = []
+        self.visited = False
     
     def add_connection(self, connected_station, distance):
         self.connections[connected_station] = distance
     
+    
     def pick_shortest_connection(self, current_station):
-
+        # print(current_station)
         distance_counter = 10000
-        next_station = ""
+        next_station = None
         stations = current_station.connections
 
         for station in stations:
             if int(stations[station]) < distance_counter:
-                if station not in current_station.used_connections:
+                if station not in current_station.used_connections and current_station not in station.used_connections:
                     distance_counter = stations[station]
                     next_station = station
-
         return next_station
     
     def get_travel_time(self, connection):
-        return self.connections[connection]
+        time = self.connections[connection]
+        return time
+    
+    def set_visited(self):
+        self.visited = True
+        

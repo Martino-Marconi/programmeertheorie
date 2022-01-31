@@ -1,7 +1,6 @@
 import csv
 
-from station import Station
-# from connection import Connection
+from code.classes.station import Station
 
 def file_loader():
 
@@ -27,17 +26,8 @@ def file_loader():
                     
                     if row[1] == station.name:
                         if row[0] == connection.name:
-<<<<<<< HEAD
                             station.add_connection(connection, float(row[2]))
 
-=======
-                            station.add_connection(connection)
-                            station.add_distance(connection, row[2])   
-
-
-                            
->>>>>>> d934e0f (new)
     return stations
 
-if __name__ == "__main__":
-    file_loader()
+
