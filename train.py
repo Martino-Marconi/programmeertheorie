@@ -5,6 +5,7 @@ import plot
 import pandas as pd
 import score
 import matplotlib.pyplot as plt
+import copy
 
 
 class Train:
@@ -21,8 +22,7 @@ class Train:
 
 class Route:
     def __init__(self, routes, max_time):
-        self.stations = file_loader()[0]
-        self.connections = file_loader()[1]
+        self.stations = file_loader()
         self.trains = []
         self.routes = routes
         self.train_counter = 0
@@ -94,21 +94,92 @@ class Route:
             self.train_counter += 1
 
         self.improve_trains()
-
         # once number of required trains is reached, print + plot results and calculate score
         final_score = score.calculate_score(self.trains, self.stations)
 
         self.plot()
         score.print_results(final_score, self.train_data, "data/output.csv")
+        tmp_data = copy.deepcopy(self.train_data)
+        tmp_trains = copy.deepcopy(self.trains)
+        tmp_stations = copy.deepcopy(self.stations)
 
+        print(f"First score: {final_score}")
         self.improve_route()
 
-        final_score = score.calculate_score(self.trains, self.stations)
+        for i in range(100):
+            self.improve_route_2()
+            new_score = score.calculate_score(self.trains, self.stations)
+            # print(f"Iteration {i}, Score: {new_score}")
+            if new_score < final_score:
+                self.train_data = tmp_data
+                self.trains = tmp_trains
+                self.stations = tmp_stations
+                # print(f"Trains: {len(self.trains)}")
+                # print("Not improved")
+            else:
+                tmp_data = copy.deepcopy(self.train_data)
+                tmp_trains = copy.deepcopy(self.trains)
+                tmp_stations = copy.deepcopy(self.stations)
+                final_score = new_score
+                # print(f"Trains: {len(self.trains)}")
+                # print("Improved")
+        
+        self.improve_trains_2()
+        
+        self.get_train_data()
+
+        print(f"Second score: {final_score}")
+
         self.plot()
         score.print_results(final_score, self.train_data, "data/output2.csv")
+    
+    def improve_route_2(self):
+        train = random.choice(self.trains)
+        unused_stations = []
+        while len(train.stops) != 1:
+            current_last_stop = train.stops[-1]
+            train.stops.pop()
 
+            next_stop = random.choice(list(train.stops[-1].connections.keys()))
+            fail_counter = 0
+            if next_stop != current_last_stop:
+                train.stops.append(next_stop)
+                next_stop.set_visited()
+                distance = train.stops[-2].get_travel_time(next_stop)
+                train.time_travelled += distance
+                break
+            while next_stop == current_last_stop:
+                next_stop = random.choice(list(train.stops[-1].connections.keys()))
+                fail_counter += 1
+                if fail_counter == 10:
+                    break
 
+        if len(train.stops) == 1:
+            self.improve_trains()
+
+        self.improve_route_subfunction(train, unused_stations)
+    
+    def improve_trains_2(self):
+        # remove trains that go to stops that have all already been visited
+        trains_to_remove = []
+        for train in self.trains:
+            station_counter = 0
+            for station in train.stops:
+                if station.visited > 1:
+                    station_counter += 1
+                
+                if station_counter == len(train.stops):
+                    trains_to_remove.append(train)
+
+        for train in trains_to_remove:
+            if train in self.trains:
+                for station in train.stops:
+                    station.visited -= 1
+                self.trains.remove(train)
+                
+                
     def improve_trains(self):
+        self.improve_route_3()
         # Removes trains that only go to one station
         trains_to_remove = []
 
@@ -120,6 +191,8 @@ class Route:
         # remove trains from route class
         for train in trains_to_remove:
             if train in self.trains:
+                for station in train.stops:
+                    station.visited -= 1
                 self.trains.remove(train)
         
         # fix train numbers to make them consecutive again
@@ -139,7 +212,8 @@ class Route:
         # improve routes of trains until they're around 180 minutes, giving priority to unused stops
         for train in self.trains:
             self.improve_route_subfunction(train, unused_stations)
-        
+    
+    def improve_route_3(self):
         unused_stations = []
 
         for station in self.stations:
@@ -147,7 +221,7 @@ class Route:
                 unused_stations.append(station)
         
         # make new trains and routes starting from stations that have not been visited yet
-        while len(unused_stations) != 0:
+        while len(unused_stations) != 0 and len(self.trains) <= 20:
             train_number = self.trains[-1].train_number + 1
             train = Train(train_number, 180)
             self.trains.append(train)
@@ -155,8 +229,6 @@ class Route:
             unused_stations.pop(0)
             self.improve_route_subfunction(train, unused_stations)
     
-
-        print(unused_stations)
     
 
     def improve_route_subfunction(self, train, unused_stations):
@@ -189,6 +261,7 @@ class Route:
             distance = current_stop.get_travel_time(next_stop)
             if train.time_travelled + distance < 180:
                 train.stops.append(next_stop)
+                train.time_travelled += distance
                 next_stop.set_visited()
                 current_stop = next_stop
             else:
@@ -202,22 +275,17 @@ class Route:
 
     def add_travel_time(self, distance):
         self.train.time_travelled += distance
-    
+
 
     def use_connections(self, station1, station2):
         station1.used_connections.append(station2)
         station2.used_connections.append(station1)
 
-        for connection in self.connections:
-            if station1.name == connection.connected_stations[0].name and station2.name == connection.connected_stations[1].name:
-                self.train.connections.append(connection)
-                connection.set_visited()
-    
 
     def connection_already_used(self):
         if self.current_station in self.next_station.used_connections and self.next_station in self.current_station.used_connections:
             return True
-        
+
         return False
     
 
