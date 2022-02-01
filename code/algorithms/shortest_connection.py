@@ -51,7 +51,6 @@ def run(routes, max_time, hill_climber):
         
         # pick random first stop 
         tr.current_station = pick_first_stop(ro.stations, ro.all_stops, train)
-        print(tr.current_station.name)
         tr.current_station.set_visited()
         train.stops.append(tr.current_station)
         ro.all_stops.append(tr.current_station)
