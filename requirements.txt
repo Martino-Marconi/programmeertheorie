@@ -6,3 +6,4 @@ matplotlib
 pyplot
 shapely
 cbsodata
+statistics
