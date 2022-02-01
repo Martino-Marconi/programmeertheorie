@@ -21,10 +21,10 @@ def pick_first_stop(stations, stops, train):
     # return first_stop
 
 
-    # # ----------- ONE CONNECTION ------------------
-    # first_stop = pick_one_connection_station(stations, stops)
+    # ----------- ONE CONNECTION ------------------
+    first_stop = pick_one_connection_station(stations, stops)
     
-    # return first_stop
+    return first_stop
 
 
     # # ----------- SHORTEST CONENCTION -------------
