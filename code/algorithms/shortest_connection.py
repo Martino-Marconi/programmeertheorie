@@ -5,6 +5,7 @@ import code.score.score as score
 import random
 import pandas as pd
 import numpy as np
+import copy
 
 
 
@@ -93,10 +94,9 @@ def run(routes, max_time, hill_climber):
             break
         
 
-    
     # once number of required trains is reached, print + plot results and calculate score
     final_score = score.calculate_score(ro.trains, ro.stations)
-    ro.plot()
+    ro.plot(ro.train_data)
     score.print_results(final_score, ro.train_data, "data/output.csv")
     print(f"no score: {final_score}")
 
@@ -104,14 +104,36 @@ def run(routes, max_time, hill_climber):
     
     # # ----------- HILL CLIMBER ------------------
     if hill_climber == True: 
+        tmp_data = copy.deepcopy(ro.train_data)
+        tmp_trains = copy.deepcopy(ro.trains)
+        tmp_stations = copy.deepcopy(ro.stations)
         ro.improve_route()
 
-        final_score = score.calculate_score(ro.trains, ro.stations)
-        ro.plot()
-        score.print_results(final_score, ro.train_data, "data/output2.csv")
-        print(f"hc score: {final_score}")
+        for i in range(100):
+            ro.improve_route_2()
+            new_score = score.calculate_score(ro.trains, ro.stations)
+            if new_score < final_score:
+                ro.train_data = tmp_data
+                ro.trains = tmp_trains
+                ro.stations = tmp_stations
+            else:
+                tmp_data = copy.deepcopy(ro.train_data)
+                tmp_trains = copy.deepcopy(ro.trains)
+                tmp_stations = copy.deepcopy(ro.stations)
+                final_score = new_score
+        
+        # ro.improve_trains_2()
+        train_data = ro.get_train_data()
+
+
+        ro.plot(train_data)
+        score.print_results(final_score, ro.train_data, "code/score/output2.csv")
+        print(f"hill c. score: {final_score}")
         print()
     
+
+
+
 def pick_random_first_stop(stations, stops):
     
 
@@ -156,7 +178,6 @@ def pick_shortest_connection_start(stations, stops, train):
         continue
     first_stop = pick_random_first_stop(stations, stops)
     return first_stop
-
         
 
 
