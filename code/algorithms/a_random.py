@@ -2,6 +2,7 @@ from code.classes.train import Train
 from code.classes.train import Route
 import code.score.score as score
 
+import copy
 import random
 
 def pick_first_stop(stations):
@@ -71,27 +72,42 @@ def run(routes, max_time, hill_climber):
         ro.train_counter += 1
 
     
-    
     # once number of required trains is reached, print + plot results and calculate score
     final_score = score.calculate_score(ro.trains, ro.stations)
-    ro.get_train_data()
-    ro.plot()
+    train_data = ro.get_train_data()
+    ro.plot(train_data)
     score.print_results(final_score, ro.train_data, "code/score/output1.csv")
-    print(f"normal score: {final_score}")
 
     # # ----------- HILL CLIMBER ------------------
     if hill_climber == True: 
+        tmp_data = copy.deepcopy(ro.train_data)
+        tmp_trains = copy.deepcopy(ro.trains)
+        tmp_stations = copy.deepcopy(ro.stations)
         ro.improve_route()
 
-        final_score = score.calculate_score(ro.trains, ro.stations)
-        ro.plot()
+        print(f"First score: {final_score}")
+
+        for i in range(100):
+            ro.improve_route_2()
+            new_score = score.calculate_score(ro.trains, ro.stations)
+            if new_score < final_score:
+                ro.train_data = tmp_data
+                ro.trains = tmp_trains
+                ro.stations = tmp_stations
+            else:
+                tmp_data = copy.deepcopy(ro.train_data)
+                tmp_trains = copy.deepcopy(ro.trains)
+                tmp_stations = copy.deepcopy(ro.stations)
+                final_score = new_score
+        
+        ro.improve_trains_2()
+        train_data = ro.get_train_data()
+
+
+        ro.plot(train_data)
         score.print_results(final_score, ro.train_data, "code/score/output2.csv")
         print(f"hill c. score: {final_score}")
         print()
-
-
-    
-
 
 
 
