@@ -2,6 +2,7 @@ from code.classes.train import Train
 from code.classes.train import Route
 import code.score.score as score
 
+
 import random
 
 def pick_first_stop(stations, stops):
@@ -39,7 +40,7 @@ def pick_random_connection(current_station, stops):
 
     return next_station
 
-def run(routes, max_time, hill_climber):
+def run(routes, max_time, semi_random, semi_random_whc, hill_climber):
     """
     Randomly assign each station with one of the possible connections.
     """
@@ -99,9 +100,15 @@ def run(routes, max_time, hill_climber):
     # once number of required trains is reached, print + plot results and calculate score
     final_score = score.calculate_score(ro.trains, ro.stations)
     ro.get_train_data()
-    ro.plot()
-    score.print_results(final_score, ro.train_data, "code/score/output1.csv")
-    print(f"normal score: {final_score}")
+
+    semi_random.append_score(final_score)
+    if_higher = semi_random.check_if_highest(final_score)
+    
+    if if_higher:
+        ro.plot()
+        score.print_results(final_score, ro.train_data, "code/score/output1.csv")
+        print(f"normal score: {final_score}")
+
 
     # # ----------- HILL CLIMBER ------------------
     if hill_climber == True: 
@@ -109,9 +116,14 @@ def run(routes, max_time, hill_climber):
 
         final_score = score.calculate_score(ro.trains, ro.stations)
         ro.plot()
-        score.print_results(final_score, ro.train_data, "code/score/output2.csv")
-        print(f"hill c. score: {final_score}")
-        print()
+
+        semi_random_whc.append_score(final_score)
+        higher = semi_random_whc.check_if_highest(final_score)
+
+        if higher:
+            score.print_results(final_score, ro.train_data, "code/score/output2.csv")
+            print(f"hill c. score: {final_score}")
+            print()
 
 
     

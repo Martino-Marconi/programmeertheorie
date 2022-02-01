@@ -1,75 +1,62 @@
 from code.classes.train import Route
+from code.algorithms import a_random, b_semi_random, time_travelled, shortest_connection
+from code.classes.parameters import Random, Random_whc, Semi_random, Semi_random_whc, Shortest_con, Shortest_con_whc
 
-from code.algorithms import a_random
-from code.algorithms import b_semi_random
-from code.algorithms import time_travelled
-from code.algorithms import shortest_connection
-
-
-# from code.algorithms import breadth_first
-from code.classes.loader import file_loader
+from sys import argv
+import time
 
 if __name__ == "__main__":
 
-    # # ask for user input
-    # print()
-    # routes = int(input("How many trains are available? "))
-    # print()
-    # max_time = int(input("How many minutes does a train drive? "))
-    # print()
-    # runs = int(input("How many runs? "))
-    # print()
-    # hill_climber = input("Hillclimber is = True or False? ")
-    # print()
+    random = Random()
+    random_whc = Random_whc()
+    semi_random = Semi_random()
+    semi_random_whc = Semi_random_whc()
+    shortest_con = Shortest_con()
+    shortest_con_whc = Shortest_con_whc()
 
-    # add trains to Route class
     routes = 20
     max_time = 180
-    runs = 5
-    hill_climber = True
+    run_time = 5
 
-    print(f"Routes: {routes}")
-    print(f"Max time: {max_time}")
-    print(f"Runs: {runs}")
-    print()
+    start = time.time()
+    n_runs = 0
 
-    # --------------------- RANDOM ---------------------
-    # randomly pick first stop
-    print("random")
-    for x in range(runs):
-        a_random.run(routes, max_time, hill_climber)
-    print()
-
-
-    # ------------------ SEMI_RANDOM ------------------
-    # semi-randomly pick first stop
-    # Average: xxxx (1000 runs)
-    print("semi-random")
-    for x in range(runs):
-        b_semi_random.run(routes, max_time, hill_climber)
-    print()
+    while time.time() - start < run_time:
+        print(f"run: {n_runs}")
+        
+        # --------------------- RANDOM ---------------------
+        # randomly pick first stop
+        # print("random")
+        # for x in range(runs):
+        # a_random.run(routes, max_time, random, random_whc, hill_climber=False)
+        # print()
+        a_random.run(routes, max_time, random, random_whc, hill_climber=True)
 
 
-    # ---------------SHORTEST_CONNECTION --------------
-    # semi-randomly pick first stop
-    # Average: xxxx (1000 runs)
-    print("shortest-connection")
-    for x in range(runs):  
-        shortest_connection.run(routes, max_time, hill_climber)
-    print()
+        # ------------------ SEMI_RANDOM ------------------
+        # semi-randomly pick first stop
+        # Average: xxxx (1000 runs)
+        # print("semi-random")
+        # for x in range(runs):
+        # b_semi_random.run(routes, max_time, semi_random, semi_random_whc, hill_climber=False)
+        # print()
+        b_semi_random.run(routes, max_time, semi_random, semi_random_whc, hill_climber=True)
 
-    # # # ---------------TIME_TRAVELLED ------------------
-    # # # semi-randomly pick first stop
-    # # # Average: xxxx (1000 runs)
-    # for x in range(runs):  
-    #     time_travelled.run(routes, max_time)
-    # print()
 
-    # ---------------HILL_CLIMBER -------------------
-    # semi-randomly pick first stop
-    # Average: xxxx (1000 runs)
-    
-    # improve_route.run(routes, max_time)
+        # ---------------SHORTEST_CONNECTION --------------
+        # semi-randomly pick first stop
+        # Average: xxxx (1000 runs)
+        # print("shortest-connection")
+        # for x in range(runs):  
+        # shortest_connection.run(routes, max_time, shortest_con, shortest_con_whc, hill_climber=False)
+        # print()
+        shortest_connection.run(routes, max_time, shortest_con, shortest_con_whc, hill_climber=True)
+
+
+        # add one to runs
+        n_runs += 1
+        print()
+        print()
 
 
 

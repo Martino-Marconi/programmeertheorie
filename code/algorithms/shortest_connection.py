@@ -3,43 +3,37 @@ from code.classes.train import Route
 import code.score.score as score
 
 import random
+import pandas as pd
 
 
 
-def pick_first_stop(stations, stops):
+def pick_first_stop(stations, stops, train):
     """
     Pick the first stop for each train. Semi-random algorithm, 
     because it is not possible to start at a station that is 
     already visited.
     """
     
-    # ----------- RANDOM FIRST STOP ---------------
-    first_stop = pick_random_first_stop(stations, stops)
+    # # ----------- RANDOM FIRST STOP ---------------
+    # first_stop = pick_random_first_stop(stations, stops)
 
-    return first_stop
-
-    # # ----------- ONE CONNECTION ------------------
-    # first_stop = ""
-    # while True:
-
-    #     first_stop = pick_random_first_stop(stations, stops)
-
-    #     # for i in range(1, 5, 1):
-    #     if len(first_stop.connections) == 1 and first_stop not in stops:
-    #         first_stop = first_stop
-    #         print(len(first_stop.connections))
-    #         break
-
-    #     # als alle first stops zijn bereden, break
-        
-    # if first_stop == None:
-    #     first_stop = pick_random_first_stop(stations, stops)
-    
     # return first_stop
 
-    # ----------- SHORTEST CONENCTION -------------
 
-def run(routes, max_time, hill_climber):
+    # ----------- ONE CONNECTION ------------------
+    first_stop = pick_one_connection_station(stations, stops)
+    
+    return first_stop
+
+
+    # # ----------- SHORTEST CONENCTION -------------
+    # first_stop = pick_shortest_connection_start(stations, stops, train)
+
+    # return first_stop
+
+
+
+def run(routes, max_time, shortest_con, shortest_con_whc, hill_climber):
     """
     Randomly assign each station with one of the possible connections.
     """
@@ -55,7 +49,7 @@ def run(routes, max_time, hill_climber):
         train = ro.trains[(ro.train_counter - 1)]
         
         # pick random first stop 
-        tr.current_station = pick_first_stop(ro.stations, ro.all_stops)
+        tr.current_station = pick_first_stop(ro.stations, ro.all_stops, train)
         tr.current_station.set_visited()
         train.stops.append(tr.current_station)
         ro.all_stops.append(tr.current_station)
@@ -101,25 +95,33 @@ def run(routes, max_time, hill_climber):
     
     # once number of required trains is reached, print + plot results and calculate score
     final_score = score.calculate_score(ro.trains, ro.stations)
-    ro.plot()
-    score.print_results(final_score, ro.train_data, "data/output.csv")
-    print(f"no score: {final_score}")
+    ro.get_train_data()
 
+    shortest_con.append_score(final_score)
+    if_higher = shortest_con.check_if_highest(final_score)
     
-    
+    if if_higher:
+        ro.plot()
+        score.print_results(final_score, ro.train_data, "code/score/output1.csv")
+        print(f"normal score: {final_score}")
+
+
     # # ----------- HILL CLIMBER ------------------
     if hill_climber == True: 
         ro.improve_route()
 
         final_score = score.calculate_score(ro.trains, ro.stations)
         ro.plot()
-        score.print_results(final_score, ro.train_data, "data/output2.csv")
-        print(f"hc score: {final_score}")
-        print()
+
+        shortest_con_whc.append_score(final_score)
+        higher = shortest_con_whc.check_if_highest(final_score)
+
+        if higher:
+            score.print_results(final_score, ro.train_data, "code/score/output2.csv")
+            print(f"hill c. score: {final_score}")
+            print()
     
 def pick_random_first_stop(stations, stops):
-    
-
     while True:
         
         first_stop = random.choice(stations)
@@ -130,7 +132,36 @@ def pick_random_first_stop(stations, stops):
 
     return first_stop
 
+def pick_one_connection_station(stations, stops):
+    for i in range(1, 100, 1):
+        first_stop = pick_random_first_stop(stations, stops)
 
+        if len(first_stop.connections) == 1 and first_stop not in stops:
+            return first_stop
+        continue
+
+    first_stop = pick_random_first_stop(stations, stops)
+    return first_stop
+
+def pick_shortest_connection_start(stations, stops, train):
+    empty_dataframe = pd.DataFrame()
+
+    for station in stations:
+        new_station = {'station1' : station, 'station2': station.connections.keys(), 'time': station.connections.values()}
+        connections_df = pd.DataFrame.from_dict(new_station)
+        empty_dataframe = empty_dataframe.append(connections_df, ignore_index=True)
+    sorted_dataframe = empty_dataframe.sort_values(by="time", ascending=True, ignore_index=True)
+
+    for index, row in sorted_dataframe.iterrows():
+        count = random.choice(range(index, (index+3)))
+        first_stop = sorted_dataframe.iloc[count]
+
+        if first_stop.station1 not in stops or first_stop.station2 not in stops:
+            
+            return first_stop.station1
+        continue
+    first_stop = pick_random_first_stop(stations, stops)
+    return first_stop
 
         
 
