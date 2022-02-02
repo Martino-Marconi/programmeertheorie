@@ -1,20 +1,25 @@
 # Programmeertheorie - RailNL
 
-Dit project maakt een lijnvoering op basis van twintig trajecten door heel Nederland. Het doel van het project is om een zo hoog mogelijke score te krijgen (tussen 0 en 10.000). Het doel hierbij is dat de treinen zoveel mogelijk stations bereiken binnen een tijdsframe van 3 uur. Gedurende dit project hebben wij een aantal verbeteringen doorgevoerd om de score gaandeweg te doen stijgen.
+Dit project maakt een lijnvoering op basis van twintig trajecten door heel Nederland. Het doel van het project is om een zo hoog mogelijke score te krijgen (tussen 0 en 10.000). Het doel hierbij is dat de treinen zoveel mogelijk stations bereiken binnen een tijdsframe van 2 uur. Gedurende dit project hebben wij een aantal verbeteringen doorgevoerd om de score gaandeweg te doen stijgen.
 
 ### Wat zijn de trajecten waarover treinen gedurende de dag heen en weer rijden?
 
 #### Opdracht 1.1 - Noord en Zuid Holland
+In deze opdracht maken wij gebruik van:
 - 22 stations
 - maximaal zeven trajecten
 - tijdsframe: 120 minuten
 - voorwaarde: alle verbindingen worden bereden
 
+Als onderdeel van de opdracht hebben wij meegekregen:
 - .csv bestand met tussenliggende spoorverbindingen
 - .csv bestand met locaties stations
 
 
 #### Opdracht 1.2 - Toets met formule
+
+De score bereken wij op basis van de volgende formule:
+
 K = p*10.000 - (T*100 + Min)
 
 - K = kwaliteit lijnvoering (max. 10.000)
