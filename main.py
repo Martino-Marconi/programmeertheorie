@@ -28,7 +28,7 @@ if __name__ == "__main__":
     # max time in minutes, run time in seconds
     routes = 20
     max_time = 180
-    run_time = 5
+    run_time = 40
 
     # set timer and amount of runs to default
     start = time.time()
@@ -70,6 +70,8 @@ if __name__ == "__main__":
         # add one to runs
         n_runs += 1
 
+    # plot the results in a histogram
+    parameters.plot_results(n_runs, [random, random_whc, semi_random, semi_random_whc, shortest_con, shortest_con_whc])
 
 
 

@@ -1,4 +1,3 @@
-# from code.classes import station
 from code.classes.loader import file_loader
 from code.classes import plot
 
@@ -38,8 +37,7 @@ class Route:
 
         merged_plot = pd.merge(df, coords_df, on="stations")
 
-        plot.map_plot(merged_plot, self.train_counter)
-
+        plot.map_plot(merged_plot)
 
     def all_stations_visited(self,stations):
         visit_true = 0

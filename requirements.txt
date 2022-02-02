@@ -1,0 +1,13 @@
+###### Requirements ######
+python 3
+pandas
+geopandas
+matplotlib
+pyplot
+shapely
+cbsodata
+statistics
+collections
+random
+csv
+numpy

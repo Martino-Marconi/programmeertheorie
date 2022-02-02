@@ -1,6 +1,25 @@
 from numpy import average
 import statistics
+import matplotlib.pyplot as plt
+import pandas as pd
 
+
+def plot_results(runs, algorithms):
+
+    hist_plot = plt.figure("test_hist_plot", figsize=(18,5))
+    ax = plt.axes()
+
+    colors = ["g", "b", "y", "r", "c", "m"]
+
+    for algorithm, color in zip(algorithms, colors):
+        data = pd.DataFrame({'scores': algorithm.score_list})
+        ax.hist(data['scores'], bins=100, label = algorithm.algorithm, color=color, alpha=0.5)
+
+    ax.set_ylabel('frequentie')
+    ax.set_xlabel('score')
+    hist_plot.legend()
+    hist_plot.suptitle(f'Scores per strategie voor {runs} runs')
+    hist_plot.savefig("output/hist_scores_plot.png")
 
 class Random:
     def __init__(self):
