@@ -34,13 +34,13 @@ K = p*10.000 - (T*100 + Min)
 
 ### Optimalisaties
 
-## Random algoritme:
+#### Random algoritme:
 
-## Semi-Random
-## Shortest connection
-## Random met hill climber
-## Semi-Random met hill climber
-## Shortest connection with hill climber
+#### Semi-Random
+#### Shortest connection
+#### Random met hill climber
+#### Semi-Random met hill climber
+#### Shortest connection with hill climber
 
 
 ### Lokaal runnen
