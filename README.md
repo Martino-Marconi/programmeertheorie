@@ -34,6 +34,8 @@ K = p*10.000 - (T*100 + Min)
 
 ### Optimalisaties
 
+![resultaten](resultaten.jepg?raw=true "resultaten")
+
 #### Random algoritme:
 Het random algoritme kiest een random beginstation uit en ook een willekeurige volgende verbinding. Het doel van het random algoritme is om een "basisscore" te genereren die we kunnen gebruiken om te testen of onze optimalisaties een posititef effect hebben.
 
