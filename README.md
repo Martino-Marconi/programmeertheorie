@@ -74,10 +74,10 @@ Run het project
 ```bash
   python3 main.py <optie1> <optie2> <optie3> <optie4> 
 ```
--optie1 = algoritme (random, semi-random, shortest-connection)
--optie2 = runs (aantal runs)
--optie3 = treinen (aantal treinen)
--optie4 = duur (tijd in seconden)
+- optie1 = algoritme (random, semi-random, shortest-connection)
+- optie2 = runs (aantal runs)
+- optie3 = treinen (aantal treinen)
+- optie4 = duur (tijd in seconden)
 
 ## Auteurs
 
