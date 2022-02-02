@@ -61,12 +61,6 @@ if __name__ == "__main__":
         # set hill climber True/False if run with(out) hill climber
         shortest_connection.run(routes, max_time, shortest_con, shortest_con_whc, hill_climber=True)
 
-        # ---------------LOWEST_CONNECTIONS--------------
-        # this algorithm choses it stops based on the 
-        # connected station with the lowest possible 
-        # connected stations
-        # ---------------------EMPTY----------------------
-
         # add one to runs
         n_runs += 1
 
