@@ -1,6 +1,6 @@
 from code.classes.train import Train
 from code.classes.train import Route
-import code.score.score as score
+import code.classes.score as score
 import code.algorithms.hill_climber as hc
 
 

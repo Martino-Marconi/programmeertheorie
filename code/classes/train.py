@@ -1,12 +1,11 @@
 # from code.classes import station
 from code.classes.loader import file_loader
-from code import plot
+from code.classes import plot
 
 
 import random
 import pandas as pd
-import code as score
-from collections import defaultdict
+import code.classes as score
 
 class Route:
     def __init__(self, routes, max_time):

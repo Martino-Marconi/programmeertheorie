@@ -2,9 +2,8 @@ from code.classes.train import Train
 from code.classes.train import Route
 import code.algorithms.hill_climber as hc
 
-import code.score.score as score
+import code.classes.score as score
 
-import copy
 import random
 
 def pick_first_stop(stations):

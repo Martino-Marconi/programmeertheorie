@@ -2,7 +2,7 @@ from tempfile import tempdir
 from code.classes.train import Train
 from code.classes.train import Route
 from code.classes.station import Station as st
-import code.score.score as score
+import code.classes.score as score
 
 import random
 

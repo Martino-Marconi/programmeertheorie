@@ -60,4 +60,4 @@ def map_plot(dataframe, trains):
         plt.plot(tmp_df["x"], tmp_df["y"], label=f"train_{i}", color=color)
        
     plt.legend()
-    plt.savefig("code/visualisation/NLplot.png")
+    plt.savefig("output/NLplot.png")

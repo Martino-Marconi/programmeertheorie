@@ -25,9 +25,6 @@ def calculate_score(trains, stations):
 
     return score
 
-
-
-
 def print_results(score, train_data, data_file):
 
     score_dict = {"score": score}

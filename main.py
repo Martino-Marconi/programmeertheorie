@@ -1,5 +1,7 @@
 from code.algorithms import a_random, b_semi_random, shortest_connection
 from code.classes.parameters import Random, Random_whc, Semi_random, Semi_random_whc, Shortest_con, Shortest_con_whc
+from code.classes import parameters
+
 
 import time
 from sys import argv
@@ -26,7 +28,7 @@ if __name__ == "__main__":
     # max time in minutes, run time in seconds
     routes = 20
     max_time = 180
-    run_time = 60
+    run_time = 5
 
     # set timer and amount of runs to default
     start = time.time()
@@ -67,6 +69,7 @@ if __name__ == "__main__":
 
         # add one to runs
         n_runs += 1
+
 
 
 

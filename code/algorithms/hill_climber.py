@@ -1,4 +1,4 @@
-import code.score.score as score
+import code.classes.score as score
 
 import copy
 
