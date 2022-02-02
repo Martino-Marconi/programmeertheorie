@@ -6,7 +6,7 @@ import pandas as pd
 
 def plot_results(runs, algorithms):
 
-    test_hist_plot = plt.figure("test_hist_plot", figsize=(18,5))
+    hist_plot = plt.figure("test_hist_plot", figsize=(18,5))
     ax = plt.axes()
 
     colors = ["g", "b", "y", "r", "c", "m"]
@@ -17,8 +17,9 @@ def plot_results(runs, algorithms):
 
     ax.set_ylabel('frequentie')
     ax.set_xlabel('score')
-    test_hist_plot.suptitle(f'Scores per strategie voor {runs} runs')
-    test_hist_plot.savefig("code/visualisation/hist_scores_plot.png")
+    hist_plot.legend()
+    hist_plot.suptitle(f'Scores per strategie voor {runs} runs')
+    hist_plot.savefig("code/visualisation/hist_scores_plot.png")
 
 
 class Random:
