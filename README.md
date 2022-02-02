@@ -37,12 +37,14 @@ K = p*10.000 - (T*100 + Min)
 #### Random algoritme:
 Het random algoritme kiest een random beginstation uit en ook een willekeurige volgende verbinding. Het doel van het random algoritme is om een "basisscore" te genereren die we kunnen gebruiken om te testen of onze optimalisaties een posititef effect hebben.
 
-#### Semi-Random
+#### Semi-Random:
+Het "semi-random algoritme" selecteert de beginstations van de treinen op basis van het aantal connecties dat deze stations hebben. Hierbij gaat de voorkeur uit naar een beginstation met maar een verbinding. Dit zorgt er voor dat deze stations al bezocht zijn en dat de trein niet stil komt te staan omdat het traject dat de trein aflegt om bij dit station te komen al bereden is (elk traject gaan we maar een keer over).
 
 #### Shortest connection:
 Het "shortest connection algortime" kiest het beginstation en de volgende stops op basis van de kortste connectie. Het idee hierachter is dat er op deze manier meer stations bezocht kunnen worden dan bij het random algoritme omdat de treinen hierbij efficiënter te werk gaan.
 
 #### Random met hill climber
+
 #### Semi-Random met hill climber
 #### Shortest connection with hill climber
 
