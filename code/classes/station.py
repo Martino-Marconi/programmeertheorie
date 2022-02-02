@@ -7,12 +7,18 @@ class Station:
         self.connections = {}
         self.used_connections = []
         self.visited = 0
-    
+
     def add_connection(self, connected_station, distance):
+        """
+        Add connection to station class.
+        """
         self.connections[connected_station] = distance
-    
 
     def pick_shortest_connection(self, current_station):
+        """
+        Pick the closest connection based on travel time out
+        of all possible station connections.
+        """
         distance_counter = 10000
         next_station = None
         stations = current_station.connections
@@ -25,8 +31,14 @@ class Station:
         return next_station
 
     def get_travel_time(self, connection):
+        """
+        Return travel time
+        """
         time = self.connections[connection]
         return time
-    
+
     def set_visited(self):
+        """
+        Add 1 every time a station is visited by a train.
+        """
         self.visited += 1
