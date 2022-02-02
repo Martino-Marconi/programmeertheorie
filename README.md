@@ -52,6 +52,7 @@ Run het project
 
 ```bash
   python3 main.py
+```
   
 
 ## Auteurs
