@@ -53,6 +53,10 @@ def run(routes, max_time, shortest_con, shortest_con_whc, hill_climber):
             # break if there are no useable connections
             if tr.no_useable_connections():
                 break
+               
+            # break if all stations have been visited already
+            if ro.all_stations_visited(ro.stations):
+                break
             
             # add travel time
             tr.add_travel_time(distance)
