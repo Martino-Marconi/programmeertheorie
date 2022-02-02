@@ -1,4 +1,4 @@
-###### Requirements to run our project ######
+###### Requirements ######
 python 3
 pandas
 geopandas
