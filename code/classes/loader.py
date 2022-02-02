@@ -6,7 +6,7 @@ def file_loader():
 
     stations = []
 
-    with open("data/StationsNationaal.csv") as file:
+    with open("input/StationsNationaal.csv") as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
@@ -14,7 +14,7 @@ def file_loader():
             station = Station(row[0], row[1], row[2])
             stations.append(station)
 
-    with open("data/ConnectiesNationaal.csv") as file:
+    with open("input/ConnectiesNationaal.csv") as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:

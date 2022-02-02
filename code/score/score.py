@@ -29,7 +29,7 @@ def calculate_score(trains, stations):
 
 
 def print_results(score, train_data, data_file):
-        
+
     score_dict = {"score": score}
     with open(data_file, "w") as file:
         writer = csv.writer(file)

@@ -1,5 +1,6 @@
 from code.classes.train import Train
 from code.classes.train import Route
+import code.algorithms.hill_climber as hc
 
 import code.score.score as score
 
@@ -71,6 +72,9 @@ def run(routes, max_time, random, random_whc, hill_climber):
 
         tr.time_travelled = 0
         ro.train_counter += 1
+    
+        if ro.all_stations_visited(ro.stations):
+            break
 
     
     
@@ -82,38 +86,16 @@ def run(routes, max_time, random, random_whc, hill_climber):
     higher = random.check_if_highest(final_score)
     if higher == True:
         ro.plot(ro.train_data)
-        score.print_results(final_score, ro.train_data, "code/score/output_random.csv")
+
+        data_file = f"output/random.csv"
+        score.print_results(final_score, ro.train_data, data_file)
 
 
     # # ----------- HILL CLIMBER ------------------
-    if hill_climber == True: 
-        tmp_data = copy.deepcopy(ro.train_data)
-        tmp_trains = copy.deepcopy(ro.trains)
-        tmp_stations = copy.deepcopy(ro.stations)
-        ro.improve_route()
-
-        for i in range(100):
-            ro.improve_route_2()
-            new_score = score.calculate_score(ro.trains, ro.stations)
-            if new_score < final_score:
-                ro.train_data = tmp_data
-                ro.trains = tmp_trains
-                ro.stations = tmp_stations
-            else:
-                tmp_data = copy.deepcopy(ro.train_data)
-                tmp_trains = copy.deepcopy(ro.trains)
-                tmp_stations = copy.deepcopy(ro.stations)
-                final_score = new_score
+    if hill_climber == True:
+        data_file = f"output/random_whc.csv"
+        hc.hill_climber_algorithm(ro, final_score, random_whc, data_file)
         
-        ro.improve_trains_2()
-        ro.get_train_data()
-
-        random_whc.append_score(final_score)
-        higher = random_whc.check_if_highest(final_score)
-        
-        if higher == True:
-            ro.plot(ro.train_data)
-            score.print_results(final_score, ro.train_data, "code/score/output_random_whc.csv")
 
 
 

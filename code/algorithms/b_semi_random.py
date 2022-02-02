@@ -1,6 +1,8 @@
 from code.classes.train import Train
 from code.classes.train import Route
 import code.score.score as score
+import code.algorithms.hill_climber as hc
+
 
 import copy
 import random
@@ -99,46 +101,23 @@ def run(routes, max_time, semi_random, semi_random_whc, hill_climber):
     
     # once number of required trains is reached, print + plot results and calculate score
     final_score = score.calculate_score(ro.trains, ro.stations)
-    train_data = ro.get_train_data()
+    ro.get_train_data()
 
     semi_random.append_score(final_score)
-    if_higher = semi_random.check_if_highest(final_score)
+    higher = semi_random.check_if_highest(final_score)
     
-    if if_higher:
-        ro.plot(train_data)
-        score.print_results(final_score, ro.train_data, "code/score/output_semi_random.csv")
+    if higher == True:
+        ro.plot(ro.train_data)
+
+        data_file = f"output/semi_random.csv"
+        score.print_results(final_score, ro.train_data, data_file)
 
 
     # # ----------- HILL CLIMBER ------------------
-    if hill_climber == True: 
-        tmp_data = copy.deepcopy(ro.train_data)
-        tmp_trains = copy.deepcopy(ro.trains)
-        tmp_stations = copy.deepcopy(ro.stations)
-        ro.improve_route()
-
-
-        for i in range(100):
-            ro.improve_route_2()
-            new_score = score.calculate_score(ro.trains, ro.stations)
-            if new_score < final_score:
-                ro.train_data = tmp_data
-                ro.trains = tmp_trains
-                ro.stations = tmp_stations
-            else:
-                tmp_data = copy.deepcopy(ro.train_data)
-                tmp_trains = copy.deepcopy(ro.trains)
-                tmp_stations = copy.deepcopy(ro.stations)
-                final_score = new_score
+    if hill_climber == True:
+        data_file = f"output/semi_random_whc.csv"
+        hc.hill_climber_algorithm(ro, final_score, semi_random_whc, data_file)
         
-        ro.improve_trains_2()
-        train_data = ro.get_train_data()
-
-        semi_random_whc.append_score(final_score)
-        higher = semi_random_whc.check_if_highest(final_score)
-
-        if higher:
-            ro.plot(train_data)
-            score.print_results(final_score, ro.train_data, "code/score/output_semi_random_whc.csv")
 
     
 

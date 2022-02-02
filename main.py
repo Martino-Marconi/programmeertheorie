@@ -2,7 +2,7 @@ from code.algorithms import a_random, b_semi_random, shortest_connection
 from code.classes.parameters import Random, Random_whc, Semi_random, Semi_random_whc, Shortest_con, Shortest_con_whc
 
 import time
-import numpy as np
+from sys import argv
 
 if __name__ == "__main__":
 
@@ -13,6 +13,14 @@ if __name__ == "__main__":
     semi_random_whc = Semi_random_whc()
     shortest_con = Shortest_con()
     shortest_con_whc = Shortest_con_whc()
+
+    # check command line arguments
+    if len(argv) not in [1,2, 3, 4, 5]:
+        print("Usage: python3 main.py [algorithm] [runs] [available trains] [train duration]")
+        exit(1)
+
+    # command line arguments
+    # nog afmaken
 
     # allocate data to required values
     # max time in minutes, run time in seconds

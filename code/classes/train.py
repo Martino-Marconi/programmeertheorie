@@ -1,10 +1,11 @@
 # from code.classes import station
 from code.classes.loader import file_loader
-from code.visualisation import plot
+from code import plot
+
 
 import random
 import pandas as pd
-import code.score.score as score
+import code as score
 from collections import defaultdict
 
 class Route:

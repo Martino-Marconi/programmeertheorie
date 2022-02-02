@@ -19,7 +19,7 @@ def load_coordinates():
     stations = []
     x_coords = []
     y_coords = []
-    with open("data/StationsNationaal.csv") as file:
+    with open("input/StationsNationaal.csv") as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
