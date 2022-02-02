@@ -7,3 +7,7 @@ pyplot
 shapely
 cbsodata
 statistics
+collections
+random
+csv
+numpy
