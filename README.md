@@ -53,7 +53,13 @@ Run het project
 ```bash
   python3 main.py
 ```
-  
+
+## Gebruik
+
+```bash
+  python3 main.py <optie1> 
+```
+optie1 = 
 
 ## Auteurs
 
