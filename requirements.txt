@@ -5,7 +5,6 @@ geopandas
 matplotlib
 pyplot
 shapely
-cbsodata
 statistics
 collections
 random
