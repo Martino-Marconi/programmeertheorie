@@ -32,6 +32,15 @@ K = p*10.000 - (T*100 + Min)
 - Wij hebben geprobeerd om zoveel mogelijk object-georienteerd te programmeren
 - Wij hebben geprobeerd om zoveel ons project zoveel mogelijk te visualiseren. In de map "visualisations" staan twee plots; een plot visueliseert de trajecten die de treinen afleggen en de andere laat zien hoeveel verbetering elk algoritme oplevert
 
+#### Optimalisaties
+
+- Random algoritme
+- Semi-Random
+- Shortest connection
+- Random met hill climber
+- Semi-Random met hill climber
+- Shortest connection with hill climber
+
 
 ## Lokaal runnen
 
