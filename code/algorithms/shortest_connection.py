@@ -78,8 +78,8 @@ def run(routes, max_time, shortest_con, shortest_con_whc, hill_climber):
             if tr.no_useable_connections():
                 break
 
-            if ro.all_stations_visited(ro.stations):
-                break
+#             if ro.all_stations_visited(ro.stations):
+#                 break
 
             tr.add_travel_time(distance)
             train.stops.append(tr.next_station)
