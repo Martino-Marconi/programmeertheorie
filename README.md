@@ -46,9 +46,13 @@ Het "semi-random algoritme" selecteert de beginstations van de treinen op basis 
 Het "shortest connection algortime" kiest het beginstation en de volgende stops op basis van de kortste connectie. Het idee hierachter is dat er op deze manier meer stations bezocht kunnen worden dan bij het random algoritme omdat de treinen hierbij efficiënter te werk gaan.
 
 #### Random met hill climber
+Om het random algoritme te optimaliseren hebben we een hill climber algoritme toegevoegd dat probeert door middel van kleine aanpassingen aan de code een zo hoog mogelijke score te halen.
 
 #### Semi-Random met hill climber
+Om het semi-random algoritme te optimaliseren hebben we een hill climber algoritme toegevoegd dat probeert door middel van kleine aanpassingen aan de code een zo hoog mogelijke score te halen.
+
 #### Shortest connection with hill climber
+Om het shortest connection algoritme te optimaliseren hebben we een hill climber algoritme toegevoegd dat probeert door middel van kleine aanpassingen aan de code een zo hoog mogelijke score te halen.
 
 
 ### Lokaal runnen
