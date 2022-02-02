@@ -1,4 +1,3 @@
-# from code.classes import station
 from code.classes.loader import file_loader
 from code import plot
 
