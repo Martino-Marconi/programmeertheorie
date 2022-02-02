@@ -33,7 +33,6 @@ class Route:
         return self.train_data
 
     def plot(self, train_data):
-        print("working")
         df = plot.make_dataframe(train_data)
         coords_df = plot.load_coordinates()
 

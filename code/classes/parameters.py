@@ -21,16 +21,13 @@ class Random:
         self.average = average(self.score_list)
         self.runs += 1
         self.st_deviation = statistics.pstdev(self.score_list)
-        print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
+        # print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
 
         
 
     def check_if_highest(self, score):
-        
-        print(score)
-        print(self.highest)
-
         if score >= self.highest:
+            print(f"runs: {self.runs} -- {self.algorithm} IMPROVED with SCORE: {score}.")
             return True
         return False
 
@@ -55,12 +52,12 @@ class Random_whc:
         self.average = average(self.score_list)
         self.runs += 1
         self.st_deviation = statistics.pstdev(self.score_list)
-        print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
+        # print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
 
         
     def check_if_highest(self, score):
-
         if score >= self.highest:
+            print(f"runs: {self.runs} -- {self.algorithm} IMPROVED with SCORE: {score}.")            
             return True
         return False
         
@@ -84,12 +81,12 @@ class Semi_random:
         self.average = average(self.score_list)
         self.runs += 1
         self.st_deviation = statistics.pstdev(self.score_list)
-        print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
+        # print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
 
         
     def check_if_highest(self, score):
-
         if score >= self.highest:
+            print(f"runs: {self.runs} -- {self.algorithm} IMPROVED with SCORE: {score}.")            
             return True
         return False
 
@@ -113,12 +110,13 @@ class Semi_random_whc:
         self.average = average(self.score_list)
         self.runs += 1
         self.st_deviation = statistics.pstdev(self.score_list)
-        print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
+        # print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
 
         
     def check_if_highest(self, score):
 
         if score >= self.highest:
+            print(f"runs: {self.runs} -- {self.algorithm} IMPROVED with SCORE: {score}.")            
             return True
         return False
 
@@ -141,12 +139,13 @@ class Shortest_con:
         self.average = average(self.score_list)
         self.runs += 1
         self.st_deviation = statistics.pstdev(self.score_list)
-        print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
+        # print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
 
         
     def check_if_highest(self, score):
 
         if score >= self.highest:
+            print(f"runs: {self.runs} -- {self.algorithm} IMPROVED with SCORE: {score}.")            
             return True
         return False
 
@@ -170,12 +169,12 @@ class Shortest_con_whc:
         self.average = average(self.score_list)
         self.runs += 1
         self.st_deviation = statistics.pstdev(self.score_list)
-        print(f"{self.algorithm} = Score: {score}, Highest: {self.highest}, Average: {self.average}")
 
         
     def check_if_highest(self, score):
 
         if score >= self.highest:
+            print(f"runs: {self.runs} -- {self.algorithm} IMPROVED with SCORE: {score}.")            
             return True
         return False
 

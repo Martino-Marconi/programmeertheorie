@@ -107,7 +107,6 @@ def run(routes, max_time, semi_random, semi_random_whc, hill_climber):
     if if_higher:
         ro.plot(train_data)
         score.print_results(final_score, ro.train_data, "code/score/output_semi_random.csv")
-        print(f"normal score: {final_score}")
 
 
     # # ----------- HILL CLIMBER ------------------
@@ -140,9 +139,6 @@ def run(routes, max_time, semi_random, semi_random_whc, hill_climber):
         if higher:
             ro.plot(train_data)
             score.print_results(final_score, ro.train_data, "code/score/output_semi_random_whc.csv")
-            print(f"hill c. score: {final_score}")
-            print()
-
 
     
 

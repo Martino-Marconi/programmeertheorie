@@ -106,7 +106,6 @@ def run(routes, max_time, shortest_con, shortest_con_whc, hill_climber):
     if if_higher:
         ro.plot(train_data)
         score.print_results(final_score, ro.train_data, "code/score/output_sh.csv")
-        print(f"normal score: {final_score}")
 
 
     # # ----------- HILL CLIMBER ------------------
@@ -138,8 +137,7 @@ def run(routes, max_time, shortest_con, shortest_con_whc, hill_climber):
         if higher:
             ro.plot(train_data)
             score.print_results(final_score, ro.train_data, "code/score/output_sc_whc.csv")
-            print(f"hill c. score: {final_score}")
-            print()
+
     
 def pick_random_first_stop(stations, stops):
     while True:

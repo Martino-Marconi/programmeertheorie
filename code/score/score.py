@@ -29,23 +29,17 @@ def calculate_score(trains, stations):
 
 
 def print_results(score, train_data, data_file):
-
-
-    # if float(new_score) > float(highest_current_score):
-    
+        
     score_dict = {"score": score}
     with open(data_file, "w") as file:
         writer = csv.writer(file)
         writer.writerow(["train", "stations"])
         for key, value in train_data.items():
-            # print([key, value])
             
             writer.writerow([key, value])
 
         for key, value in score_dict.items():
             writer.writerow([key, value])
-            # print(f"New Score! {[key, value]}")
-            # print()
 
 
         

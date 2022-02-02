@@ -106,7 +106,6 @@ def run(routes, max_time):
                 
             continue
 
-        print(ro.train_counter, tr.time_travelled)
         tr.time_travelled = 0
         ro.train_counter += 1
         

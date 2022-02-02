@@ -13,7 +13,6 @@ class Station:
     
 
     def pick_shortest_connection(self, current_station):
-        # print(current_station)
         distance_counter = 10000
         next_station = None
         stations = current_station.connections
