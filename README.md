@@ -1,4 +1,4 @@
-# Programmeertheorie - RailNl
+# Programmeertheorie - RailNL
 
 ### Wat zijn de trajecten waarover treinen gedurende de dag heen en weer rijden?
 
