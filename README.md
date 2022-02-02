@@ -4,7 +4,7 @@ Dit project maakt een lijnvoering op basis van twintig trajecten door heel Neder
 
 ### Wat zijn de trajecten waarover treinen gedurende de dag heen en weer rijden?
 
-#### Opdracht 1.1 - Noord en Zuid Holland
+### Opdracht - Nederland
 In deze opdracht maken wij gebruik van:
 - 22 stations
 - maximaal zeven trajecten
@@ -16,7 +16,7 @@ Als onderdeel van de opdracht hebben wij meegekregen:
 - .csv bestand met locaties stations
 
 
-#### Opdracht 1.2 - Toets met formule
+### Opdracht - Toets met formule
 
 De score bereken wij op basis van de volgende formule:
 
@@ -28,21 +28,22 @@ K = p*10.000 - (T*100 + Min)
 - Min = aantal minuten van alle trajecten samen
 
 
-#### Opmerkingen
+### Opmerkingen
 - Wij hebben geprobeerd om zoveel mogelijk object-georienteerd te programmeren
 - Wij hebben geprobeerd om zoveel ons project zoveel mogelijk te visualiseren. In de map "visualisations" staan twee plots; een plot visueliseert de trajecten die de treinen afleggen en de andere laat zien hoeveel verbetering elk algoritme oplevert
 
-#### Optimalisaties
+### Optimalisaties
 
-- Random algoritme
-- Semi-Random
-- Shortest connection
-- Random met hill climber
-- Semi-Random met hill climber
-- Shortest connection with hill climber
+## Random algoritme:
+
+## Semi-Random
+## Shortest connection
+## Random met hill climber
+## Semi-Random met hill climber
+## Shortest connection with hill climber
 
 
-## Lokaal runnen
+### Lokaal runnen
 
 Clone het project
 
@@ -71,9 +72,12 @@ Run het project
 ## Gebruik
 
 ```bash
-  python3 main.py <optie1> 
+  python3 main.py <optie1> <optie2> <optie3> <optie4> 
 ```
-optie1 = 
+optie1 = algoritme (random, semi-random, shortest-connection)
+optie2 = runs (aantal runs)
+optie3 = treinen (aantal treinen)
+optie4 = duur (tijd in seconden)
 
 ## Auteurs
 
