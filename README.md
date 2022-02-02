@@ -48,13 +48,13 @@ K = p*10.000 - (T*100 + Min)
 Clone het project
 
 ```bash
-  git clone https://link-to-project
+  git clone git@github.com:Martino-Marconi/programmeertheorie.git
 ```
 
 Ga naar de juiste directory
 
 ```bash
-  cd my-project
+  cd programmeertheorie
 ```
 
 Installeer de dependecies
