@@ -6,12 +6,12 @@ class Station:
 
         self.connections = {}
         self.used_connections = []
-        self.visited = False
+        self.visited = 0
     
     def add_connection(self, connected_station, distance):
         self.connections[connected_station] = distance
     
-    
+
     def pick_shortest_connection(self, current_station):
         # print(current_station)
         distance_counter = 10000
@@ -24,11 +24,10 @@ class Station:
                     distance_counter = stations[station]
                     next_station = station
         return next_station
-    
+
     def get_travel_time(self, connection):
         time = self.connections[connection]
         return time
     
     def set_visited(self):
-        self.visited = True
-        
+        self.visited += 1

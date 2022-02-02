@@ -5,6 +5,9 @@ import code.score.score as score
 import random
 import pandas as pd
 
+import copy
+
+
 
 
 def pick_first_stop(stations, stops, train):
@@ -95,29 +98,46 @@ def run(routes, max_time, shortest_con, shortest_con_whc, hill_climber):
     
     # once number of required trains is reached, print + plot results and calculate score
     final_score = score.calculate_score(ro.trains, ro.stations)
-    ro.get_train_data()
+    train_data = ro.get_train_data()
 
     shortest_con.append_score(final_score)
     if_higher = shortest_con.check_if_highest(final_score)
     
     if if_higher:
-        ro.plot()
-        score.print_results(final_score, ro.train_data, "code/score/output1.csv")
+        ro.plot(train_data)
+        score.print_results(final_score, ro.train_data, "code/score/output_sh.csv")
         print(f"normal score: {final_score}")
 
 
     # # ----------- HILL CLIMBER ------------------
     if hill_climber == True: 
+        tmp_data = copy.deepcopy(ro.train_data)
+        tmp_trains = copy.deepcopy(ro.trains)
+        tmp_stations = copy.deepcopy(ro.stations)
         ro.improve_route()
 
-        final_score = score.calculate_score(ro.trains, ro.stations)
-        ro.plot()
+        for i in range(100):
+            ro.improve_route_2()
+            new_score = score.calculate_score(ro.trains, ro.stations)
+            if new_score < final_score:
+                ro.train_data = tmp_data
+                ro.trains = tmp_trains
+                ro.stations = tmp_stations
+            else:
+                tmp_data = copy.deepcopy(ro.train_data)
+                tmp_trains = copy.deepcopy(ro.trains)
+                tmp_stations = copy.deepcopy(ro.stations)
+                final_score = new_score
+        
+        # ro.improve_trains_2()
+        train_data = ro.get_train_data()
 
         shortest_con_whc.append_score(final_score)
         higher = shortest_con_whc.check_if_highest(final_score)
 
         if higher:
-            score.print_results(final_score, ro.train_data, "code/score/output2.csv")
+            ro.plot(train_data)
+            score.print_results(final_score, ro.train_data, "code/score/output_sc_whc.csv")
             print(f"hill c. score: {final_score}")
             print()
     

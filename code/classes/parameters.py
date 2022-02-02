@@ -6,9 +6,9 @@ class Random:
     def __init__(self):
         self.algorithm = "random"
         self.score_list = []
-        self.highest = int
-        self.lowest = int
-        self.average = int
+        self.highest = 0
+        self.lowest = 0
+        self.average = 0
         self.runs = 0
         self.st_deviation = int
 
@@ -26,8 +26,11 @@ class Random:
         
 
     def check_if_highest(self, score):
+        
+        print(score)
+        print(self.highest)
 
-        if score > self.highest:
+        if score >= self.highest:
             return True
         return False
 
@@ -57,7 +60,7 @@ class Random_whc:
         
     def check_if_highest(self, score):
 
-        if score > self.highest:
+        if score >= self.highest:
             return True
         return False
         
@@ -86,7 +89,7 @@ class Semi_random:
         
     def check_if_highest(self, score):
 
-        if score > self.highest:
+        if score >= self.highest:
             return True
         return False
 
@@ -115,7 +118,7 @@ class Semi_random_whc:
         
     def check_if_highest(self, score):
 
-        if score > self.highest:
+        if score >= self.highest:
             return True
         return False
 
@@ -143,7 +146,7 @@ class Shortest_con:
         
     def check_if_highest(self, score):
 
-        if score > self.highest:
+        if score >= self.highest:
             return True
         return False
 
@@ -172,7 +175,7 @@ class Shortest_con_whc:
         
     def check_if_highest(self, score):
 
-        if score > self.highest:
+        if score >= self.highest:
             return True
         return False
 

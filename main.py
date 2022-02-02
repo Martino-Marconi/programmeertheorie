@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     routes = 20
     max_time = 180
-    run_time = 5
+    run_time = 100
 
     start = time.time()
     n_runs = 0
