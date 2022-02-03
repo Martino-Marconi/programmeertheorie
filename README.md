@@ -9,7 +9,7 @@ In deze opdracht maken wij gebruik van:
 - maximaal 20 trajecten
 - 61 Intercity stations in Nederland
 - tijdsframe: 120 minuten
-- voorwaarde: alle verbindingen worden bereden
+
 
 Als onderdeel van de opdracht hebben wij meegekregen:
 - .csv bestand met tussenliggende spoorverbindingen
