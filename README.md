@@ -6,7 +6,6 @@ Dit project maakt een lijnvoering op basis van twintig trajecten door heel Neder
 
 ### Opdracht - Nederland
 In deze opdracht maken wij gebruik van:
-- maximaal 20 trajecten
 - 61 Intercity stations in Nederland
 - tijdsframe: 180 minuten
 
